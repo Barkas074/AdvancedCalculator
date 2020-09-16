@@ -18,7 +18,7 @@ namespace GreetingUser
 			}
 			//Использование слов "лет" и "год" в зависимости от возраста
 			string text = "лет";
-			int ageLastSymbols = Convert.ToInt32(age.ToString().Substring(age.ToString().Length - 1));
+			int ageLastSymbols = int.Parse(age.ToString().Substring(age.ToString().Length - 1));
 			if (ageLastSymbols == 1)
 			{
 				text = "год";
@@ -60,7 +60,7 @@ namespace GreetingUser
 				}
 				return birthDay;
 			}
-			catch (FormatException e)
+			catch (FormatException)
 			{
 				return 0;
 			}
@@ -84,14 +84,14 @@ namespace GreetingUser
 					birthDay = int.Parse(Console.ReadLine());
 				}
 				Console.WriteLine("Месяц?");
-				birthMonth = Convert.ToInt32(Console.ReadLine());
+				birthMonth = int.Parse(Console.ReadLine());
 				while (birthMonth < 1 || birthMonth > 12)
 				{
 					Console.WriteLine("В году только 12 месяцев!");
-					birthMonth = Convert.ToInt32(Console.ReadLine());
+					birthMonth = int.Parse(Console.ReadLine());
 				}
 				Console.WriteLine("Год?");
-				birthYear = Convert.ToInt32(Console.ReadLine());
+				birthYear = int.Parse(Console.ReadLine());
 				if (birthYear < (DateTime.Today.Year - 122))
 				{
 					Console.WriteLine("Официально самому старейшему человеку в мире было 122 года. И не говори, что ты Ли Цинъюнь. Укажи правильный год:");
@@ -102,17 +102,17 @@ namespace GreetingUser
 				}
 				while (birthYear < (DateTime.Today.Year - 122) || birthYear >= DateTime.Today.Year)
 				{
-					birthYear = Convert.ToInt32(Console.ReadLine());
+					birthYear = int.Parse(Console.ReadLine());
 				}
 				birthDay = ValidateDate(birthYear, birthMonth, birthDay);
 				birthDate = new DateTime(birthYear, birthMonth, birthDay);
 			}
-			catch (FormatException e)
+			catch (FormatException)
 			{
 				Console.WriteLine("А вот так делать не стоило!");
 				Environment.Exit(0);
 			}
-			catch (ArgumentOutOfRangeException e)
+			catch (ArgumentOutOfRangeException)
 			{
 				Console.WriteLine("А вот так делать не стоило!");
 				Environment.Exit(0);
