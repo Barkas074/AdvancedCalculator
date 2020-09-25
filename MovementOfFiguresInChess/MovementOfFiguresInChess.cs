@@ -106,7 +106,7 @@ namespace MovementOfFiguresInChess
 
 		static bool CheckingTheHorseMovement(int sum, string coordinatesFigureBefore, string coordinatesFigureAfter)
 		{
-			if (sum == 3)
+			if (sum == 3 && (coordinatesFigureAfter[0] - coordinatesFigureBefore[0]) != 0 && (coordinatesFigureAfter[1] - coordinatesFigureBefore[1]) != 0)
 			{
 				return true;
 			}
