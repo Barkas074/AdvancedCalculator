@@ -10,24 +10,19 @@ namespace GreetingUser
 			Console.WriteLine("Привет! Как тебя зовут?");
 			string nameUser = Console.ReadLine();
 			birthDate = InputDate();
+
 			//Определение возраста
 			int age = DateTime.Today.Year - birthDate.Year;
 			if (birthDate > DateTime.Today.AddYears(-age))
-			{
 				age--;
-			}
+
 			//Использование слов "лет" и "год" в зависимости от возраста
 			string text = "лет";
 			int ageLastSymbols = int.Parse(age.ToString().Substring(age.ToString().Length - 1));
 			if (ageLastSymbols == 1)
-			{
 				text = "год";
-			}
 			if (ageLastSymbols >= 2 && ageLastSymbols <= 4)
-			{
 				text = "года";
-			}
-
 			Console.WriteLine($"Привет, {nameUser}! Твой возраст - {age} {text}. Приятно познакомиться.");
 		}
 
@@ -36,26 +31,20 @@ namespace GreetingUser
 			//Проверяем високосный ли год, а также число в феврале.
 			try
 			{
-				if (DateTime.IsLeapYear(birthYear))
+				if (DateTime.IsLeapYear(birthYear) && birthMonth == 2)
 				{
-					if (birthMonth == 2)
+					while (birthDay < 1 || birthDay > 29)
 					{
-						while (birthDay < 1 || birthDay > 29)
-						{
-							Console.WriteLine("Год високосный! В феврале могут быть числа от 1 до 29!");
-							birthDay = int.Parse(Console.ReadLine());
-						}
+						Console.WriteLine("Год високосный! В феврале могут быть числа от 1 до 29!");
+						birthDay = int.Parse(Console.ReadLine());
 					}
 				}
-				else
+				else if (birthMonth == 2)
 				{
-					if (birthMonth == 2)
+					while (birthDay < 1 || birthDay > 28)
 					{
-						while (birthDay < 1 || birthDay > 28)
-						{
-							Console.WriteLine("В феврале могут быть числа от 1 до 28!");
-							birthDay = int.Parse(Console.ReadLine());
-						}
+						Console.WriteLine("В феврале могут быть числа от 1 до 28!");
+						birthDay = int.Parse(Console.ReadLine());
 					}
 				}
 				return birthDay;
@@ -64,7 +53,6 @@ namespace GreetingUser
 			{
 				return 0;
 			}
-			
 		}
 
 		static DateTime InputDate()
@@ -93,13 +81,9 @@ namespace GreetingUser
 				Console.WriteLine("Год?");
 				birthYear = int.Parse(Console.ReadLine());
 				if (birthYear < (DateTime.Today.Year - 122))
-				{
 					Console.WriteLine("Официально самому старейшему человеку в мире было 122 года. И не говори, что ты Ли Цинъюнь. Укажи правильный год:");
-				}
 				if (birthYear >= DateTime.Today.Year)
-				{
 					Console.WriteLine("Так и поверил. Укажи правильный год:");
-				}
 				while (birthYear < (DateTime.Today.Year - 122) || birthYear >= DateTime.Today.Year)
 				{
 					birthYear = int.Parse(Console.ReadLine());
