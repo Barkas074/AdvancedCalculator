@@ -16,30 +16,29 @@ namespace MovementOfFiguresInChess
 			}
 
 			Console.WriteLine("Введите начальные координаты фигуры: ");
-			string coordinatesFigureBefore = Console.ReadLine().ToUpper();
-			while (coordinatesFigureBefore.Length != 2 || coordinatesFigureBefore[0] < 65 || coordinatesFigureBefore[0] > 72 || coordinatesFigureBefore[1] < 49 || coordinatesFigureBefore[1] > 56)
-			{
-				Console.WriteLine("Координаты могут состоять из 2 символов. Первый - от A до H, второй - от 1 до 8");
-				coordinatesFigureBefore = Console.ReadLine().ToUpper();
-			}
-
+			string coordinatesFigureBefore = ReadString(); 
+			
 			Console.WriteLine("Введите конечные координаты фигуры: ");
-			string coordinatesFigureAfter = Console.ReadLine().ToUpper();
-			while (coordinatesFigureAfter.Length != 2 || coordinatesFigureAfter[0] < 65 || coordinatesFigureAfter[0] > 72 || coordinatesFigureAfter[1] < 49 || coordinatesFigureAfter[1] > 56)
-			{
-				Console.WriteLine("Координаты могут состоять из 2 символов. Первый - от A до H, второй - от 1 до 8");
-				coordinatesFigureAfter = Console.ReadLine().ToUpper();
-			}
+			string coordinatesFigureAfter = ReadString();
 
 			if (ChoiceOfFigure(figureToInt, coordinatesFigureBefore, coordinatesFigureAfter))
-			{
 				Console.WriteLine("Верно");
-			}
 			else
-			{
 				Console.WriteLine("Неверно");
-			}
 		}
+
+
+		static string ReadString()
+		{
+			string line = Console.ReadLine().ToUpper();
+			while (line.Length != 2 || line[0] < 65 || line[0] > 72 || line[1] < 49 || line[1] > 56)
+			{
+				Console.WriteLine("Координаты могут состоять из 2 символов. Первый - от A до H, второй - от 1 до 8");
+				line = Console.ReadLine().ToUpper();
+			}
+			return line;
+		}
+
 
 		static bool ChoiceOfFigure(int figureToInt, string coordinatesFigureBefore, string coordinatesFigureAfter)
 		{
@@ -66,61 +65,33 @@ namespace MovementOfFiguresInChess
 
 		static bool CheckingTheKingMovement(int sum, string coordinatesFigureBefore, string coordinatesFigureAfter)
 		{
-			if (sum == 1 || (Math.Abs(coordinatesFigureAfter[0] - coordinatesFigureBefore[0]) == 1 && Math.Abs(coordinatesFigureAfter[1] - coordinatesFigureBefore[1]) == 1))
-			{
-				return true;
-			}
-			else
-				return false;
+			return (sum == 1 || (Math.Abs(coordinatesFigureAfter[0] - coordinatesFigureBefore[0]) == 1 && Math.Abs(coordinatesFigureAfter[1] - coordinatesFigureBefore[1]) == 1));
 		}
 
 		static bool CheckingTheQueenMovement(int sum, string coordinatesFigureBefore, string coordinatesFigureAfter)
 		{
-			if (sum % 2 == 0 || coordinatesFigureAfter[0] == coordinatesFigureBefore[0] || coordinatesFigureAfter[1] == coordinatesFigureBefore[1])
-			{
-				return true;
-			}
-			else
-				return false;
+			return (sum % 2 == 0 || coordinatesFigureAfter[0] == coordinatesFigureBefore[0] || coordinatesFigureAfter[1] == coordinatesFigureBefore[1]);
 		}
 
 		static bool CheckingTheRookMovement(string coordinatesFigureBefore, string coordinatesFigureAfter)
 		{
-			if (coordinatesFigureAfter[0] == coordinatesFigureBefore[0] || coordinatesFigureAfter[1] == coordinatesFigureBefore[1])
-			{
-				return true;
-			}
-			else
-				return false;
+			return (coordinatesFigureAfter[0] == coordinatesFigureBefore[0] || coordinatesFigureAfter[1] == coordinatesFigureBefore[1]);
 		}
 
 		static bool CheckingTheElephantMovement(int sum, string coordinatesFigureBefore, string coordinatesFigureAfter)
 		{
-			if (sum % 2 == 0 && (coordinatesFigureAfter[0] - coordinatesFigureBefore[0]) != 0 && (coordinatesFigureAfter[1] - coordinatesFigureBefore[1]) != 0)
-			{
-				return true;
-			}
-			else
-				return false;
+			return (sum % 2 == 0 && (coordinatesFigureAfter[0] - coordinatesFigureBefore[0]) != 0 && (coordinatesFigureAfter[1] - coordinatesFigureBefore[1]) != 0);
 		}
 
 		static bool CheckingTheHorseMovement(int sum, string coordinatesFigureBefore, string coordinatesFigureAfter)
 		{
-			if (sum == 3 && (coordinatesFigureAfter[0] - coordinatesFigureBefore[0]) != 0 && (coordinatesFigureAfter[1] - coordinatesFigureBefore[1]) != 0)
-			{
-				return true;
-			}
-			else
-				return false;
+			return (sum == 3 && (coordinatesFigureAfter[0] - coordinatesFigureBefore[0]) != 0 && (coordinatesFigureAfter[1] - coordinatesFigureBefore[1]) != 0);
 		}
 
 		static bool CheckingThePawnMovement(string coordinatesFigureBefore, string coordinatesFigureAfter)
 		{
 			int sum = coordinatesFigureAfter[1] - coordinatesFigureBefore[1];
-			if ((coordinatesFigureBefore[0] == coordinatesFigureAfter[0]) && (sum == 1 || (coordinatesFigureBefore[1] == 50 && sum == 2)))
-				return true;
-			else
-				return false;
+			return ((coordinatesFigureBefore[0] == coordinatesFigureAfter[0]) && (sum == 1 || (coordinatesFigureBefore[1] == 50 && sum == 2)));
 		}
 	}
 }
