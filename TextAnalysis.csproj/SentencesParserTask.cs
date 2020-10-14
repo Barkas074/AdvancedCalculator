@@ -26,7 +26,8 @@ namespace TextAnalysis
                     if (WordIsLetter(word))
                         wordList.Add(word);
 				}
-                sentencesList.Add(wordList);
+                if (wordList.Count > 0)
+                    sentencesList.Add(wordList);
             }
             return sentencesList;
         }
