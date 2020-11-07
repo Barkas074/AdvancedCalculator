@@ -10,7 +10,18 @@ namespace Calculator
 	{
 		static void Main()
 		{
-			WorkWithFiles();
+			string path = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
+			string inputFile = @"\input.txt";
+			string outputFile = @"\output.txt";
+			float value = 0;
+			if (!File.Exists(path + inputFile))
+				WriteTextToFile(path, inputFile, "5 10 +");
+			value = ProcessingString(ReadTextFromFile(path, inputFile));
+
+			if (float.IsInfinity(value))
+				WriteTextToFile(path, outputFile, "Недопустимая операция");
+			else
+				WriteTextToFile(path, outputFile, value.ToString());
 		}
 
 		static void WriteTextToFile(string path, string nameFile, string text)
@@ -29,21 +40,6 @@ namespace Calculator
 			string textFromFile = Encoding.Default.GetString(array);
 			Console.WriteLine("Чтение из файла прошло успешно.");
 			return textFromFile;
-		}
-
-		public static void WorkWithFiles()
-		{
-			string path = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
-			string inputFile = @"\input.txt";
-			string outputFile = @"\output.txt";
-			float value = 0;
-			if (!File.Exists(path + inputFile))
-				WriteTextToFile(path, inputFile, "5 10 +");
-			value = ProcessingString(ReadTextFromFile(path, inputFile));
-			if (float.IsInfinity(value))
-				WriteTextToFile(path, outputFile, "Недопустимая операция");
-			else
-				WriteTextToFile(path, outputFile, value.ToString());
 		}
 
 		static float ProcessingString(string textFromFile)
@@ -68,7 +64,7 @@ namespace Calculator
 				{
 					Console.WriteLine("Выражение записано неверно. Повторить программу? y/n");
 					if (ReadAnswer())
-						WorkWithFiles();
+						Main();
 					else
 						Environment.Exit(0);
 				}
