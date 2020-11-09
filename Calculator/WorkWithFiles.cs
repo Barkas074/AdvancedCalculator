@@ -26,11 +26,11 @@ namespace Calculator
 			return ProcessingString(textFromFile);
 		}
 
-		List<string> ProcessingString(string textFromFile)
+		private List<string> ProcessingString(string textFromFile)
 		{
 			textFromFile = textFromFile.Replace("\t", string.Empty);
 			string[] text = textFromFile.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-			List<string> dictionaryOperations = new List<string>() { "*", "/", "+", "-", "^", "(", ")", "x", "log", "sin", "cos", "arcsin", "arccos", "tg", "arctg" };
+			List<string> dictionaryOperations = new List<string>() { "*", "/", "+", "-", "^", "(", ")", "x", "log", "sin", "cos", "arcsin", "arccos", "tg", "arctg", "!" };
 			List<string> textExpression = new List<string>();
 			string temp = string.Empty;
 			for (int i = 0; i < text.Length; i++)
@@ -40,13 +40,20 @@ namespace Calculator
 				else
 					for (int j = 0; j < text[i].Length; j++)
 					{
-						if (dictionaryOperations.Contains(text[i][j].ToString()) && temp != string.Empty)
-						{
-							Console.WriteLine("Выражение неверное!");
-							Environment.Exit(1);
-						}
 						temp += text[i][j];
-						if (float.TryParse(temp, out _) || dictionaryOperations.Contains(temp))
+						if (j == text[i].Length - 1)
+						{
+							if (float.TryParse(temp, out _) || dictionaryOperations.Contains(temp))
+							{
+								textExpression.Add(temp);
+								temp = string.Empty;
+							}
+						}
+						else if (float.TryParse(temp, out _) && text[i][j + 1] >= '0' && text[i][j + 1] <= '9')
+						{
+
+						}				
+						else if (float.TryParse(temp, out _) || dictionaryOperations.Contains(temp))
 						{
 							textExpression.Add(temp);
 							temp = string.Empty;
@@ -55,24 +62,6 @@ namespace Calculator
 					temp = string.Empty;
 			}
 			return textExpression;
-		}
-
-		static bool ReadAnswer()
-		{
-			string answer;
-			do
-			{
-				answer = Console.ReadLine();
-				if (!IsCorrectAnswer(answer))
-					Console.WriteLine("Введите y(es) или n(o).");
-			} while (!IsCorrectAnswer(answer));
-
-			return answer == "y" || answer == "yes";
-		}
-
-		static bool IsCorrectAnswer(string answer)
-		{
-			return answer == "y" || answer == "yes" || answer == "n" || answer == "no";
 		}
 	}
 }
