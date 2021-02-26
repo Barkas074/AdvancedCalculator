@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Calculator
+﻿namespace FunctionBuilder.Logic
 {
-	class TableOfFunctionValues : Operations
+	using System;
+	using System.Collections.Generic;
+
+	public class TableOfFunctionValues : Operations
 	{
 		private double CalculationValue(List<object> parseExpression, double x)
 		{
@@ -52,10 +52,10 @@ namespace Calculator
 			for (double x = rangeXSplit[0]; x <= rangeXSplit[1]; x += step)
 			{
 				double y = CalculationValue(parseExpression, x);
-				finalText += ($"|{IsNumberSpace(frameTableX, Math.Round(x, 2), true)}" +
+				finalText += $"|{IsNumberSpace(frameTableX, Math.Round(x, 2), true)}" +
 					$"{Math.Round(x, 2)}{IsNumberSpace(frameTableX, Math.Round(x, 2), false)}|" +
 					$"{IsNumberSpace(frameTableX, Math.Round(y, 2), true)}" +
-					$"{Math.Round(y, 2)}{IsNumberSpace(frameTableX, Math.Round(y, 2), false)}|\n");
+					$"{Math.Round(y, 2)}{IsNumberSpace(frameTableX, Math.Round(y, 2), false)}|\n";
 			}
 
 			finalText += $"|{frameTableX}|{frameTableX}|\n";

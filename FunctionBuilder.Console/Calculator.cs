@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Text;
-
-namespace Calculator
+﻿namespace FunctionBuilder.Console
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.IO;
+	using FunctionBuilder.Logic;
+
 	class Calculator : Operations
 	{
 		static void Main()
@@ -22,7 +22,10 @@ namespace Calculator
 				workWithFiles.WriteTextToFile(path, inputFile, "3.5 + 4 * 2");
 			List<string> textExpression = workWithFiles.ReadTextFromFile(path, inputFile);
 			List<object> parseExpression = ParseExpression(textExpression);
-
+			foreach (var item in parseExpression)
+			{
+				Console.WriteLine(item);
+			};
 			TableOfFunctionValues tableOfFunctionValues = new TableOfFunctionValues();
 			string finalText = tableOfFunctionValues.CreatingTable(rangeX, step[1], parseExpression);
 			workWithFiles.WriteTextToFile(path, outputFile, finalText);
