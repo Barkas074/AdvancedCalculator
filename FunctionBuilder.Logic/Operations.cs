@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Calculator
+﻿namespace FunctionBuilder.Logic
 {
-	class Operations
+	using System;
+
+	public class Operations
 	{
 		protected enum ListOperations
 		{

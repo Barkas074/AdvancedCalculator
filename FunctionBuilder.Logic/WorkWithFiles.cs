@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-
-namespace Calculator
+﻿namespace FunctionBuilder.Logic
 {
-	class WorkWithFiles
+	using System;
+	using System.Collections.Generic;
+	using System.IO;
+	using System.Text;
+
+	public class WorkWithFiles
 	{
 		public void WriteTextToFile(string path, string nameFile, string text)
 		{
@@ -52,14 +51,14 @@ namespace Calculator
 						else if (float.TryParse(temp, out _) && text[i][j + 1] >= '0' && text[i][j + 1] <= '9')
 						{
 
-						}				
+						}
 						else if (float.TryParse(temp, out _) || dictionaryOperations.Contains(temp))
 						{
 							textExpression.Add(temp);
 							temp = string.Empty;
 						}
 					}
-					temp = string.Empty;
+				temp = string.Empty;
 			}
 			return textExpression;
 		}
