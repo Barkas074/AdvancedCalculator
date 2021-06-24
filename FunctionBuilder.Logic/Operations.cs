@@ -2,86 +2,143 @@
 {
 	using System;
 
-	public class Operations
+	public abstract class Operations
 	{
-		protected enum ListOperations
+		public abstract string Name { get; }
+		public abstract int Priority { get; }
+		public abstract byte OperandCount { get; }
+
+		protected abstract double CalculationOfOperation(double numbersTwo, double numbersOne);
+
+		public override string ToString()
 		{
-			UnknownVariable = 0, OpenBracket = 1, CloseBracket = 2, Addition = 3, Subtraction = 4, Multiplication = 5, Division = 6, Degree = 7, Logarithm, Sine, Cosine, Tangent, ArcSine, ArcCosine, ArcTangent, Factorial
+			return Name;
 		}
 
-		protected static ListOperations TypeOfOperation(string operation)
+		public int ToPriority()
 		{
-			switch (operation)
-			{
-				case "*":
-					return ListOperations.Multiplication;
-				case "/":
-					return ListOperations.Division;
-				case "+":
-					return ListOperations.Addition;
-				case "-":
-					return ListOperations.Subtraction;
-				case "^":
-					return ListOperations.Degree;
-				case "(":
-					return ListOperations.OpenBracket;
-				case ")":
-					return ListOperations.CloseBracket;
-				case "!":
-					return ListOperations.Factorial;
-				case "log":
-					return ListOperations.Logarithm;
-				case "sin":
-					return ListOperations.Sine;
-				case "cos":
-					return ListOperations.Cosine;
-				case "tg":
-					return ListOperations.Tangent;
-				case "arcsin":
-					return ListOperations.ArcSine;
-				case "arccos":
-					return ListOperations.ArcCosine;
-				case "arctg":
-					return ListOperations.ArcTangent;
-				default:
-					return ListOperations.UnknownVariable;
-			}
+			return Priority;
 		}
 
-		protected double CalculationOfOperation(ListOperations operation, double numbersTwo, double numbersOne)
-		{
-			switch (operation)
-			{
-				case ListOperations.Multiplication:
-					return numbersOne * numbersTwo;
-				case ListOperations.Division:
-					return numbersOne / numbersTwo;
-				case ListOperations.Addition:
-					return numbersOne + numbersTwo;
-				case ListOperations.Subtraction:
-					return numbersOne - numbersTwo;
-				case ListOperations.Degree:
-					return Math.Pow(numbersOne, numbersTwo);
-				case ListOperations.Logarithm:
-					return Math.Log10(numbersOne);
-				case ListOperations.Sine:
-					return Math.Sin(numbersOne);
-				case ListOperations.Cosine:
-					return Math.Cos(numbersOne);
-				case ListOperations.Tangent:
-					return Math.Tan(numbersOne);
-				case ListOperations.ArcSine:
-					return Math.Asin(numbersOne);
-				case ListOperations.ArcCosine:
-					return Math.Acos(numbersOne);
-				case ListOperations.ArcTangent:
-					return Math.Atan(numbersOne);
-				case ListOperations.Factorial:
-					return ComputeFactorial(numbersOne);
-				default:
-					return 0;
-			}
-		}
+		public double Calculate(double numbersTwo, double numbersOne) => CalculationOfOperation(numbersTwo, numbersOne);
+	}
+	
+
+	public class Addition : Operations
+	{
+		public override string Name => "+";
+		public override int Priority => 1;
+		public override byte OperandCount => 2;
+
+		protected override double CalculationOfOperation(double numbersTwo, double numbersOne) => numbersOne + numbersTwo;
+	}
+
+	public class Subtraction : Operations
+	{
+		public override string Name => "-";
+		public override int Priority => 1;
+		public override byte OperandCount => 2;
+
+		protected override double CalculationOfOperation(double numbersTwo, double numbersOne) => numbersOne - numbersTwo;
+	}
+
+	public class Multiplication : Operations
+	{
+		public override string Name => "*";
+		public override int Priority => 2;
+		public override byte OperandCount => 2;
+
+		protected override double CalculationOfOperation(double numbersTwo, double numbersOne) => numbersOne * numbersTwo;
+	}
+
+	public class Division : Operations
+	{
+		public override string Name => "/";
+		public override int Priority => 2;
+		public override byte OperandCount => 2;
+
+		protected override double CalculationOfOperation(double numbersTwo, double numbersOne) => numbersOne / numbersTwo;
+	}
+
+	public class Degree : Operations
+	{
+		public override string Name => "^";
+		public override int Priority => 3;
+		public override byte OperandCount => 2;
+
+		protected override double CalculationOfOperation(double numbersTwo, double numbersOne) => Math.Pow(numbersOne, numbersTwo);
+	}
+
+	public class Logarithm : Operations
+	{
+		public override string Name => "log";
+		public override int Priority => 4;
+		public override byte OperandCount => 2;
+
+		protected override double CalculationOfOperation(double numbersTwo, double numbersOne) => Math.Log10(numbersOne);
+	}
+
+	public class Sine : Operations
+	{
+		public override string Name => "sin";
+		public override int Priority => 4;
+		public override byte OperandCount => 1;
+
+		protected override double CalculationOfOperation(double numbersTwo, double numbersOne) => Math.Sin(numbersOne);
+	}
+
+	public class Cosine : Operations
+	{
+		public override string Name => "cos";
+		public override int Priority => 4;
+		public override byte OperandCount => 1;
+
+		protected override double CalculationOfOperation(double numbersTwo, double numbersOne) => Math.Cos(numbersOne);
+	}
+
+	public class Tangent : Operations
+	{
+		public override string Name => "tg";
+		public override int Priority => 4;
+		public override byte OperandCount => 1;
+
+		protected override double CalculationOfOperation(double numbersTwo, double numbersOne) => Math.Tan(numbersOne);
+	}
+
+	public class ArcSine : Operations
+	{
+		public override string Name => "arcsin";
+		public override int Priority => 4;
+		public override byte OperandCount => 1;
+
+		protected override double CalculationOfOperation(double numbersTwo, double numbersOne) => Math.Asin(numbersOne);
+	}
+
+	public class ArcCosine : Operations
+	{
+		public override string Name => "arccos";
+		public override int Priority => 4;
+		public override byte OperandCount => 1;
+
+		protected override double CalculationOfOperation(double numbersTwo, double numbersOne) => Math.Acos(numbersOne);
+	}
+
+	public class ArcTangent : Operations
+	{
+		public override string Name => "arctg";
+		public override int Priority => 4;
+		public override byte OperandCount => 1;
+
+		protected override double CalculationOfOperation(double numbersTwo, double numbersOne) => Math.Atan(numbersOne);
+	}
+
+	public class Factorial : Operations
+	{
+		public override string Name => "!";
+		public override int Priority => 4;
+		public override byte OperandCount => 1;
+
+		protected override double CalculationOfOperation(double numbersTwo, double numbersOne) => ComputeFactorial(numbersOne);
 
 		private static double ComputeFactorial(double n)
 		{
@@ -89,6 +146,5 @@
 				return 1;
 			return ComputeFactorial(n - 1) * n;
 		}
-
 	}
 }
