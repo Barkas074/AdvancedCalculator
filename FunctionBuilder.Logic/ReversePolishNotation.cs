@@ -12,7 +12,6 @@ namespace FunctionBuilder.Logic
 			List<object> expression = ParseExpression(textExpression);
 			List<object> rpn = new List<object>();
 			ToReversePolishNotation(expression, 0, ref rpn);
-
 			return rpn;
 		}
 
@@ -20,10 +19,6 @@ namespace FunctionBuilder.Logic
 		{
 			List<object> rpnBlank = new List<object>();
 			Stack<Operations> operations = new Stack<Operations>();
-
-
-
-
 			for (; i < expression.Count; i++)
 			{
 				object value = expression[i];
@@ -44,13 +39,6 @@ namespace FunctionBuilder.Logic
 					else if (operations.Count != 0 && operations.Peek().ToPriority() < op.ToPriority())
 					{
 						operations.Push(op);
-						//if ((string)value == ")")
-						//	while (operations.Count != 0)
-						//		if ((string)operations.Peek() != "(")
-						//			rpnBlank.Add(operations.Pop());
-						//		else
-						//			operations.Pop();
-
 					}
 					else
 					{
@@ -90,25 +78,9 @@ namespace FunctionBuilder.Logic
 				if (i == expression.Count - 1 && operations.Count != 0)
 					while (operations.Count != 0)
 						rpnBlank.Add(operations.Pop());
-				//if (value is string /*_value == "(" || (string)value == ")"*/)
-				//{
-				//	if ((string)value == ")")
-				//		while (operations.Count != 0)
-				//			if ((string)operations.Peek() != "(")
-				//				rpnBlank.Add(operations.Pop());
-				//			else
-				//				operations.Pop();
-				//	else
-				//		operations.Push(value);
-				//}
 			}
 			rpn.AddRange(rpnBlank);
 			return i;
-			//	else
-			//{
-			//	operations.Push(value);
-			//}
-
 		}
 
 		public List<object> ParseExpression(List<string> textExpression)
