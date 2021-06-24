@@ -3,39 +3,37 @@
 	using System;
 	using System.Collections.Generic;
 
-	public class TableOfFunctionValues : Operations
+	public class TableOfFunctionValues
 	{
-		private double CalculationValue(List<object> parseExpression, double x)
+		private double CalculationValue(List<object> rpn, double x)
 		{
 			double value = 0;
 			Stack<double> numbers = new Stack<double>();
-			for (int i = 0; i < parseExpression.Count; i++)
+			for (int i = 0; i < rpn.Count; i++)
 			{
-				if (parseExpression[i].GetType() == typeof(double))
-					numbers.Push((double) parseExpression[i]);
-				else if ((ListOperations) parseExpression[i] == ListOperations.UnknownVariable)
+				object valueExpression = rpn[i];
+				if (valueExpression is double valueDouble)
+					numbers.Push(valueDouble);
+				else if (valueExpression is Argument)
 					numbers.Push(x);
-				else
-					if ((int) parseExpression[i] > 7)
+				else if (valueExpression is Operations op)
 				{
-					value = CalculationOfOperation((ListOperations) parseExpression[i], 0, numbers.Pop());
-					numbers.Push(value);
-				}
-				else
-				{
-					value = CalculationOfOperation((ListOperations) parseExpression[i], numbers.Pop(), numbers.Pop());
+					if (op.ToPriority() > 3)
+						value = op.Calculate(0, numbers.Pop());
+					else
+						value = op.Calculate(numbers.Pop(), numbers.Pop());
 					numbers.Push(value);
 				}
 			}
 			return value;
 		}
 
-		public string CreatingTable(double[] rangeXSplit, double step, List<object> parseExpression)
+		public string CreatingTable(double[] rangeXSplit, double step, List<object> rpn)
 		{
 			int maxLength = 0;
 			for (double x = rangeXSplit[0]; x <= rangeXSplit[1]; x += step)
 			{
-				int yLength = Math.Round(CalculationValue(parseExpression, x)).ToString().Length;
+				int yLength = Math.Round(CalculationValue(rpn, x)).ToString().Length;
 				if (yLength > maxLength)
 					maxLength = yLength;
 			}
@@ -51,7 +49,7 @@
 
 			for (double x = rangeXSplit[0]; x <= rangeXSplit[1]; x += step)
 			{
-				double y = CalculationValue(parseExpression, x);
+				double y = CalculationValue(rpn, x);
 				finalText += $"|{IsNumberSpace(frameTableX, Math.Round(x, 2), true)}" +
 					$"{Math.Round(x, 2)}{IsNumberSpace(frameTableX, Math.Round(x, 2), false)}|" +
 					$"{IsNumberSpace(frameTableX, Math.Round(y, 2), true)}" +
